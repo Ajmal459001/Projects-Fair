@@ -530,6 +530,8 @@ HTML - Hyper Text Markup Language
             - useParams() : hook will return dynamic value of route associated with a component
             - useSelector() : hook used to select state from redux store
             - useDispatch() : hook used to dispatch action from a component 
+            - useNavigate() : used to navigate / redirect from one component to another
+            - useContext() : used to access context in component
     13. Form Handling in React : there are 2 ways to manage data inside the form by a component 
         - Controlled Components : are component which store form data inside its own state
         - Uncontrolled Components : component who access form data using its DOM elements reference 
@@ -542,6 +544,8 @@ HTML - Hyper Text Markup Language
             3. To set up path for component use 'Route' component of react-router-dom Library. Route component has attributes like 'path' and 'element' inorder to setup route for component. All route component must be inside Route Component
         - Dynamic Routing : we can setup a dynamic  / changing value in url along : symbol , so react app will understand value with a : is dynamic part of this url.
         - To set up up Page not found url use path as * , its path must be set up at end of all url in react app
+        - useNavigate hook : is return a function which capable of redirecting one page to another from  component
+        - Link component is used to redirect from one page to another using jsx
     15. Higher Order Components (HOC) : are component whose props arguement will give another component, ex : Route component
     16. API Call in react : 
             - using Axios Library : npm i axios
@@ -551,7 +555,20 @@ HTML - Hyper Text Markup Language
             - Create a services Folder inside src of your react project
     17. Data sharing between components in react :
         - State Lifting : data sharing is using props. We will create a state in common parent of data to be shared components. share state updation function to one component and state to other component
-
+        - REDUX : using state management library
+        - Context API : used to share data from different components
+            - This is in built feature of react to share data between any components without using props
+            - We can share data from one component to another component using react context 
+            - Steps to perform data sharing using context API   
+                - create a folder for holding context
+                - create a component inside the folder for performing data share using context 
+                - create a context inside the component and export the context, use 'creatContext' method
+                - inside the component create data (state update function) to be shared via the context
+                - context can share data using its 'Provider' property, as well as its value property Because Provider component value property can share the data as object
+                - make context component as the 'root component' of our project (inside the main.jsx file wrap root component inside context component), then only project components become children of context component (to access project components inside context component it can use children props)
+                - children props used to access all children of a component at the same time
+                - useContext : to access data from context in component
+                    - syntax : const {value} = useContext(context)
 
 
             --------- JSON SERVER CREATION ---------
@@ -605,5 +622,200 @@ HTML - Hyper Text Markup Language
         - useSelector(state=>state.reducer-name) : used to select state from store in a component 
         - useDispatch() : used to execute an action from a component. Hook will return a function that is capable of dispatching an action as its arguement when we call the function
             - action without arguement : dispatch-function(action-name())
-            - action with arguement : dispatch-function(action-name(arg1,...)), to access arguement of action in slice reduce function it uses its second arguement which is an object with 2 key payload and type. payload will give the arguement from action dispatched by a component
-    5. 
+            - action with arguement : dispatch-function(action-name(arg1,...)), to access arguement of action in slice reduce function it uses its second arguement which is an object with 2 key payload and type. payload will give the arguement from action dispatched by a component 
+
+
+            --------- SERVER / BACKEND TECHNOLOGIES ---------
+
+            --------- MONGODB - DATABASE ---------
+
+
+    1. DB are used to store and manage data permanently (MongoDB, SQL, MSAccess, Oracle etc..)
+    2. MongoDB - Is a NoSQL DB. Document Oriented DB, where data are stored as JSON format ({"Key":value}), It stored in memory as BSON format.
+    3. Collection : are used to store multiple JSON documents, to create a collection use its naming convention as always starts with small letter and it should be a plural
+    4. Difference between SQL & MongoDB
+                SQL                                             MongoDB
+        -------------------------------------------------------------------------
+        1. Relational SQL DB                            1. Document Oriented NoSQL DB
+        2. Data stored in Table, every table must has   2. Data stored as Collections, as JSON document
+           rows and fixed column
+        3. Uses a fixed schema                          3. Uses dynamic schema
+        4. Support large number of Datatypes            4. Limited set Datatypes
+        5. Uses for traditional bussiness app           5. Used in bigdata & real time app
+    5. MongoDB can be used in different Environment
+        - MongoDB Atlas : cloud version of MongoDB
+        - MongoDB Enterprise : subscription based version self managed 
+        - MongoDB Community : open source version
+    6. MongoDB Shell / Mongosh : terminal where MongoDB commands are used
+    7. Every document inside MongoDB has a unique key which is generated by MongoDB itself. it stored in "_id" and it value will be a string if hexadecimal numbers
+    8. CRUD operations performed by MongoDB
+        - find() : used to read all documents from a collection
+        - findOne({"Key":value}) : used to read single document from a collection
+        - insertOne({"Key":value}) : used to insert single document from a collection
+        - insertMany({"Key":value}) : used to insert multiple document from a collection
+        - countDocuments() : used to get total count of documents inside a collection
+        - limit(count) : used to limit total document from a collection
+        - skip(count) : used to skip document while getting them from a collection
+        - sort({key:1/-1}) : used to sort document , if value is 1 then ascending order -1 then descending order
+        - Querying Statements : used to get documents after applying query to collection. all querying Statements are precede by $ symbol. ex $gt,$gte,$lt,$lte,$eq,$neq,$exists,$regex. its syntax is {key:{querying-Statement : value}}
+        - $expr : used to compare keys inside a document itself, syntax : {$expr:{querying-Statement:["$key1","$key2"]}}
+        - updateOne({key:value},updated-Query) : used to update a single document from a collection, querying Statements in update query as $set,$push,$pull,$inc
+        - updateMany({key:value},updated-Query) : used to update a multiple document from a collection
+        - deleteOne({key:value}) : used to delete a single document from a collection
+        - deleteMany({key:value}) : used to delete a multiple document from a collection
+    9. Aggregation : used to join / combine two collection in a MongoDB DB
+        - Using $lookup : similar to left-outer join
+        {
+            $lookup:
+                {
+                from: <collection to join>,
+                localField: <field from the input documents>,
+                foreignField: <field from the documents of the "from" collection>,
+                as: <output array field>
+                }
+        }
+
+
+            ---------  NODE JS - SERVER SIDE TECHNOLOGIES ---------
+
+    1. Is an open source, cross platform runtime Environment to execute JS file outside the browser, create servers(used to resolve client request) in a web app
+    2. Features
+        - Extremely fast
+        - Asynchronous function
+        - Highly scalable
+    3. Nodejs Global objects : Objects can be accessed through out node app without importing it. ex: process objects, environmental objects ( used to store secret / configuration data of a project )
+    4. Nodejs Module system : used to share data between different file. it uses 'commonJSModule' system
+        - for import : it uses require('file path / package-name')
+        - for export : 
+            - to export default : use module.exports keyword
+            - to export : use exports keyword
+    5. Predefined / Built in module 
+        - fs Module : it consists of method for read/write data to a file in a system
+        - http module : used to create server resolving http client request
+        - https module : used to create server resolving https client request
+        - events module : used to manage userdefined events
+        - crypto module : used to protect data by encrypting
+    6. Execution Model : Event driven model and non blocking I/O, optimised Asynchronous task
+    7. API Access : access to system level API ( file system , network , process ) 
+    8. Working Node js : used to resolve client request from a browser and send response to client browser while Working with single thread. 
+        - Non blocking I/O
+        - Asynchronous function
+    9. Server Setup 
+        - REST API - uses http Protocol ( GET , POST , PUT , DELETE)
+        - JSON data should be passed via http request body
+        - CORS (Cross Origin Resource Sharing) Protocol used to enable data sharing between client & server
+    
+            ---------  EXPRESS JS - SERVER FRAMEWORK for Node js ---------
+    
+    1. uses for client-server Application , to create server with node js Features
+    2. Steps to create express server for resolving client request
+        - Create a folder for server Application
+        - create package.json file insdide server folder : use a command : npm init -y
+        - update script key of package.json file as "start":"node index.js" and remove test key from it
+        - Install packages needed to create server : npm i express cors dotenv 
+            - express package : npm i express - used to create express server
+            - cors packages : npm i cors - used to enable cors Protocol
+            - dotenv packages : npm i dotenv - used to load contain of .env file into process object
+            - mongoose package : npm i mongoose - used to create and manage MongoDB document with Nodejs
+        - create .env file for storing environmental variable of the project
+        - create .gitignore file for adding file / foldername inorder to ignore them while adding to git
+        - create main entry of server which is index.js file in server folder, used to define server
+            - Steps to create express in index.js / nodemon index.js
+                - import express , cors and dotenv
+                - import db connection
+                - create express server, which is capable of resolving client request
+                - use cors in express server, used to enable data sharing between server and client app
+                - use json parser insdie server app 
+                - use mongoose package inside sever app
+                - create PORT number for server app
+                - listen server app in created PORT 
+                - run server app to make express app available created port : use command in server terminal 'node index.js'
+                - to http request using express server
+                    - express-server.http-request(path,function with 2 arguements for request, response)
+    3.MVC Architecture of Node Application
+        - Controller : used to define logic to resolve client request
+            - create a folder for controllers
+                - create a js file for each controllers
+                - define logic to resolve each request and export the same
+                - import model in controllers
+            - Routes : used to define route for each client request
+                - create a folder for routes in server
+                - create js file to define route / path / url where client can request
+                - import express
+                - create an object for router class of express
+                - using router object we can define path in server app for client request
+                - export the router object and use it in server app
+            - DB Connection with server app 
+                - install mongoose : npm i mongoose 
+                - create folder inside server app
+                - create js file to define db Connection
+                - import mongoose
+                - get mongodb atlas Connection string from .env
+                - using mongoose Connect method establish Connection between server and mongodb
+                - import connection file inside index.js to execute connection
+            - Model : used to communicate Nodejs with DB 
+                - create a folder inside server
+                - create a js file to define model
+                - import mongoose inside file 
+                - using mongoose create schema /structure for data to be stored in model
+                - create model using schema 
+                - export model 
+            - Middlewares : used to perform a task before executing its controllers
+                - create folder insdide server
+                - create js file to define middleware and export middleware
+                - use middleware in specific router
+            - Handling uploaded file in server
+                - install multer : npm i multer
+                - create a folder to store uploaded files in server folder
+                - create js file to handling uploading file using multer in middleware folder
+                - defining storage space for uploaded file and use the storage in multer function and it will return a multer instance which act as middleware
+                - export the multer instance 
+                - we will use multer middleware inside any router which handling uploaded file from request, multer middleware can handle single / multiple uploaded files
+            - Exporting static file from as server to internet using node js : server.use(path,express.static('folder/file-path')) in index.js file
+
+            ---------  MONGOOSE - NODE JS package used to communicate with MongoDB & Nodejs ---------
+    
+    1. ODM (Object Data Modeling) for MongoDB to Nodejs
+    2. Mongoose library is used to create and manage MongoDB document with Nodejs
+    3. Install mongoose : npm i mongoose 
+    4. Schema : used to define structure of data to be stored in MongoDB, to create schema, create an object for mongoose schema class
+    5. Model : similar to collection of MongoDB , model will communicate controllers of a node js appp
+    6. CRUD operations using mongoose
+        - to create / insert a data in mongoose model for that we have to create object for model and pass its arguement as data, to store model data permanently in MongoDB use mongoose 'save' method
+        - read / get data : find() , findOne() , findById()
+        - Update a data : updateOne() , updateMany() , findByIdAndUpdate()
+        - Delete a data : deleteOne() , deleteMany() , findByIdAndDelete() 
+    7. Querying Statements used in mongoose : skip() , limit() , sort()
+
+        --------- JSON WEB TOKEN - USED TO AUTHORIZATION IN NODE JS  ---------
+
+    1. JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. 
+    2. Features
+        - Authorization
+        - Information Exchange
+    3. structure of token : header.payload.signature
+    4. To generate token :
+        - install jsonwebtoken : npm i jsonwebtoken
+        - import jsonwebtoken
+        - use sign method to generate token : sign(payload,password)
+        - payload : are used to store data inside the token
+        - When user successfully login then generate token for Authorization
+    5. Verify token : use verify method use token and password used to generate token
+        - if token verified then we will get an object as response with data stored in token its payload
+        - if token verification failed then we will get error
+
+        --------- MIDDLEWARES - USED TO CONTROL REQUEST RESPONSE CYCLE OF NODE JS  ---------
+
+    1. They are function with 3 arguements, first is request , second is response and third is next.
+    2. Different types of middleware
+        - Application specific middleware , ex: express.json()
+        - Router specific middleware : active for certain Routes
+             - create a function with 3 arguements
+
+        --------- MULTER - Middlewares used to handle multipart/form-data in Nodejs  ---------
+
+    1. Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
+    2. Install multer : npm i multer
+    3. Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form, the file or files object contains the files uploaded via the form.
+    4. Multer can stored uploaded file in server
+
