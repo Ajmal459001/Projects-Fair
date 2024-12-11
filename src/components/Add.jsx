@@ -74,7 +74,6 @@ const Add = () => {
           console.log(err);          
         }
       }
-
     }else{
       alert("Please fill the form completely!!!")
     }
@@ -88,7 +87,7 @@ const Add = () => {
           <Modal.Title>New Project Details!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row align-item-center">
+          <div className="row align-items-center">
             <div className="col-lg-4">
               <label>
                 <input onChange={e=>setProjectDetails({...projectDetails,projectImage:e.target.files[0]})} type="file" style={{display:'none'}} />

@@ -556,15 +556,15 @@ HTML - Hyper Text Markup Language
     17. Data sharing between components in react :
         - State Lifting : data sharing is using props. We will create a state in common parent of data to be shared components. share state updation function to one component and state to other component
         - REDUX : using state management library
-        - Context API : used to share data from different components
-            - This is in built feature of react to share data between any components without using props
-            - We can share data from one component to another component using react context 
+        - Context API : used to share data from different components without using 'props'
+            - This is in built feature of react to share data between any components without using props and avoid props drilling
+            - We can share data from one component to another component using react context , this component purpose is to share data via context
             - Steps to perform data sharing using context API   
                 - create a folder for holding context
                 - create a component inside the folder for performing data share using context 
                 - create a context inside the component and export the context, use 'creatContext' method
-                - inside the component create data (state update function) to be shared via the context
-                - context can share data using its 'Provider' property, as well as its value property Because Provider component value property can share the data as object
+                - inside the component create data (state & state update function) to be shared via the context
+                - context can share data using its 'Provider' property, as well as its 'value' property can share the data as object so that it can shre it its child child component
                 - make context component as the 'root component' of our project (inside the main.jsx file wrap root component inside context component), then only project components become children of context component (to access project components inside context component it can use children props)
                 - children props used to access all children of a component at the same time
                 - useContext : to access data from context in component
