@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Collapse } from 'react-bootstrap';
 import uploadImg from '../assets/uploadImg.png'
 import SERVER_BASE_URL from '../services/serverUrl';
+import { updateUserAPI } from '../services/allAPI';
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -52,7 +53,20 @@ const Profile = () => {
           "Content-Type" : "multipart/form-data",
           "Authorization" : `Bearer ${token}`
         }
-        // make api call
+        // make api call 
+        try {
+          const result = await updateUserAPI(reqBody,reqHeader)
+          if(result.status==200){
+            // alert
+            alert("User profile updated successfully!!!")
+            // store update user in session
+            sessionStorage.setItem("user",JSON.stringify(result.data))
+            // collapse profile
+            setOpen(!open)
+          }
+        } catch (err) {
+          console.log(err);          
+        }
       }
     }else{
       alert("Please fill the form completely!!!")
